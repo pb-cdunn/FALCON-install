@@ -11,11 +11,12 @@ FALCON_PIP_EDIT?=--edit
 FALCON_INSTALL_RULE?=symlink
 export CC=gcc
 export CXX=g++
+export CPPFLAGS+=-D_GNU_SOURCE
 
 all: checklist
 	${MAKE} show
 	${MAKE} install-pip
-	${MAKE} install
+	${MAKE} install # This will double -D_GNU_SOURCE, but that is ok for now.
 	${MAKE} check
 checklist:
 	@if [ -z "$${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
