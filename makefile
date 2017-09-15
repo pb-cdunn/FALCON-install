@@ -51,6 +51,7 @@ install-pip:
 	python -c 'import pip; print pip' || python get-pip.py ${FALCON_PIP_USER}
 	pip install ${FALCON_PIP_USER} --upgrade pip
 	pip install ${FALCON_PIP_USER} --upgrade setuptools # needed when --edit is used
+	pip install ${FALCON_PIP_USER} nose pytest # for running tests while building
 show:
 	mkdir -p ${FALCON_PREFIX}/bin
 	which python
