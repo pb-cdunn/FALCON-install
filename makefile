@@ -35,11 +35,11 @@ install-DEXTRACTOR:
 	${MAKE} -C ${FALCON_WORKSPACE}/DEXTRACTOR all
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/DEXTRACTOR ${FALCON_INSTALL_RULE}
 install-pypeFLOW:
-	cd ${FALCON_WORKSPACE}/pypeFLOW; pip uninstall -v .; pip install -v ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+	cd ${FALCON_WORKSPACE}/pypeFLOW; pip uninstall .; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-FALCON: install-pypeFLOW
-	cd ${FALCON_WORKSPACE}/FALCON; pip uninstall -v .; pip install -v ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+	cd ${FALCON_WORKSPACE}/FALCON; pip uninstall .; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-FALCON_unzip: install-pypeFLOW
-	cd ${FALCON_WORKSPACE}/FALCON_unzip; pip uninstall -v .; pip install -v ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+	cd ${FALCON_WORKSPACE}/FALCON_unzip; pip uninstall .; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-nim-falcon:
 	make -C ${FALCON_WORKSPACE}/nim-falcon/src -j1 all
 	rsync ${FALCON_WORKSPACE}/nim-falcon/src/*.exe ${FALCON_PREFIX}/bin/
