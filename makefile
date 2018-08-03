@@ -39,7 +39,7 @@ install-pypeFLOW:
 install-FALCON: install-pypeFLOW
 	cd ${FALCON_WORKSPACE}/FALCON; pip uninstall .; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-FALCON_unzip: install-pypeFLOW
-	cd ${FALCON_WORKSPACE}/FALCON_unzip; pip uninstall .; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+	cd ${FALCON_WORKSPACE}/FALCON_unzip_private; pip uninstall .; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-nim-falcon:
 	make -C ${FALCON_WORKSPACE}/nim-falcon/src -j1 all
 	rsync ${FALCON_WORKSPACE}/nim-falcon/src/*.exe ${FALCON_PREFIX}/bin/
