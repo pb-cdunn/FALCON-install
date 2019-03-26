@@ -25,7 +25,7 @@ all: checklist
 checklist:
 	@if [ -z "$${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
 	@if [ ! -e "$${FALCON_PREFIX}/bin" ] ; then echo 'Error: directory FALCON_PREFIX/bin (${FALCON_PREFIX}/bin) does not exist'; exit 1; fi
-install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeFLOW install-FALCON install-git-sym install-nim-falcon
+install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeFLOW install-FALCON install-FALCON_unzip install-git-sym install-nim-falcon
 install-DAZZ_DB:
 	${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB all
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB ${FALCON_INSTALL_RULE}
@@ -42,7 +42,7 @@ install-pypeFLOW:
 	cd ${FALCON_WORKSPACE}/pypeFLOW; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-FALCON: install-pypeFLOW
 	cd ${FALCON_WORKSPACE}/FALCON; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
-install-FALCON_unzip: install-pypeFLOW
+install-FALCON_unzip: install-FALCON
 	cd ${FALCON_WORKSPACE}/FALCON_unzip_private; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-nim-falcon:
 	make -C ${FALCON_WORKSPACE}/nim-falcon/src -j1 all
