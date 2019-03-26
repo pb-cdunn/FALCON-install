@@ -80,3 +80,5 @@ clean:
 	cd ${FALCON_WORKSPACE}/DAMASKER; ${MAKE} clean
 	cd ${FALCON_WORKSPACE}/pypeFLOW; python setup.py clean; rm -rf build/ dist/
 	cd ${FALCON_WORKSPACE}/FALCON; python setup.py clean; rm -rf build/ dist/
+remote:
+	git remote add pb ssh://git@github.com/pb-cdunn/FALCON-make
