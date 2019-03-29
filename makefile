@@ -25,7 +25,7 @@ all: checklist
 checklist:
 	@if [ -z "$${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
 	@if [ ! -e "$${FALCON_PREFIX}/bin" ] ; then echo 'Error: directory FALCON_PREFIX/bin (${FALCON_PREFIX}/bin) does not exist'; exit 1; fi
-install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeFLOW install-FALCON install-FALCON_unzip install-git-sym install-nim-falcon
+install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeFLOW install-FALCON install-FALCON_unzip install-git-sym install-nim-falcon install-racon
 install-DAZZ_DB:
 	${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB all
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB ${FALCON_INSTALL_RULE}
@@ -81,5 +81,16 @@ clean:
 	cd ${FALCON_WORKSPACE}/DAMASKER; ${MAKE} clean
 	cd ${FALCON_WORKSPACE}/pypeFLOW; python setup.py clean; rm -rf build/ dist/
 	cd ${FALCON_WORKSPACE}/FALCON; python setup.py clean; rm -rf build/ dist/
+	rm -rf ${RACON_BUILD_DIR}
 remote:
 	git remote add pb ssh://git@github.com/pb-cdunn/FALCON-make
+
+RACON_BUILD_DIR=$(CURDIR)/build-racon
+
+build-racon:
+	mkdir -p ${RACON_BUILD_DIR}
+	cd ../racon && meson -Ddefault_library=static --buildtype=release -Dc_args=-O3 --prefix=${FALCON_PREFIX} ${RACON_BUILD_DIR}
+
+install-racon: | build-racon
+	ninja -v -C ${RACON_BUILD_DIR} reconfigure
+	ninja -v -C ${RACON_BUILD_DIR} install
