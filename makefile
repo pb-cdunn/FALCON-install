@@ -45,8 +45,9 @@ install-FALCON: install-pypeFLOW
 install-FALCON_unzip: install-FALCON
 	cd ${FALCON_WORKSPACE}/FALCON_unzip_private; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-nim-falcon:
-	make -C ${FALCON_WORKSPACE}/nim-falcon/src -j1 all
-	rsync ${FALCON_WORKSPACE}/nim-falcon/src/*.exe ${FALCON_PREFIX}/bin/
+	${MAKE} -C ${FALCON_WORKSPACE}/nim-falcon install
+	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/nim-falcon link
+	#rsync ${FALCON_WORKSPACE}/nim-falcon/bin/*.exe ${FALCON_PREFIX}/bin/
 install-git-sym:
 	# TODO: copy vs. symlink?
 	ln -sf $(abspath ${FALCON_WORKSPACE}/git-sym/git-sym) ${FALCON_PREFIX}/bin/git-sym
