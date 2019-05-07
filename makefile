@@ -22,7 +22,7 @@ all: checklist
 checklist:
 	@if [ -z "${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
 	@if [ ! -e "${FALCON_PREFIX}/bin" ] ; then echo 'Error: directory FALCON_PREFIX/bin (${FALCON_PREFIX}/bin) does not exist'; exit 1; fi
-install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeflow3 install-falcon3 install-falcon_unzip3 install-git-sym install-nim-falcon install-racon
+install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeflow3 install-falcon3 install-falcon_unzip3 install-git-sym install-nim-falcon install-racon install-falcon-phase
 install-DAZZ_DB:
 	${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB all
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB ${FALCON_INSTALL_RULE}
@@ -39,6 +39,8 @@ install-pypeflow3:
 	cd ${FALCON_WORKSPACE}/pypeflow3; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-falcon3: install-pypeflow3
 	cd ${FALCON_WORKSPACE}/falcon3; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+install-falcon-phase: install-falcon3
+	cd ${FALCON_WORKSPACE}/falcon-phase; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-falcon_unzip3: install-falcon3
 	cd ${FALCON_WORKSPACE}/falcon_unzip3; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-nim-falcon:
