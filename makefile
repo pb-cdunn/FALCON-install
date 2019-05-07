@@ -24,7 +24,7 @@ all: checklist
 checklist:
 	@if [ -z "$${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
 	@if [ ! -e "$${FALCON_PREFIX}/bin" ] ; then echo 'Error: directory FALCON_PREFIX/bin (${FALCON_PREFIX}/bin) does not exist'; exit 1; fi
-install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeFLOW install-FALCON install-FALCON_unzip install-git-sym install-nim-falcon install-racon
+install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeflow3 install-falcon3 install-falcon_unzip3 install-git-sym install-nim-falcon install-racon
 install-DAZZ_DB:
 	${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB all
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB ${FALCON_INSTALL_RULE}
@@ -37,12 +37,12 @@ install-DAMASKER:
 install-DEXTRACTOR:
 	${MAKE} -C ${FALCON_WORKSPACE}/DEXTRACTOR all
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/DEXTRACTOR ${FALCON_INSTALL_RULE}
-install-pypeFLOW:
-	cd ${FALCON_WORKSPACE}/pypeFLOW; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
-install-FALCON: install-pypeFLOW
-	cd ${FALCON_WORKSPACE}/FALCON; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
-install-FALCON_unzip: install-FALCON
-	cd ${FALCON_WORKSPACE}/FALCON_unzip_private; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+install-pypeflow3:
+	cd ${FALCON_WORKSPACE}/pypeflow3; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+install-falcon3: install-pypeflow3
+	cd ${FALCON_WORKSPACE}/falcon3; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+install-falcon_unzip3: install-falcon3
+	cd ${FALCON_WORKSPACE}/falcon_unzip3; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 install-nim-falcon:
 	${MAKE} -C ${FALCON_WORKSPACE}/nim-falcon install
 	PREFIX=${FALCON_PREFIX} ${MAKE} -C ${FALCON_WORKSPACE}/nim-falcon link
@@ -53,28 +53,28 @@ install-git-sym:
 
 show:
 	mkdir -p ${FALCON_PREFIX}/bin
-	which python
+	which python3
 	echo "PYTHONUSERBASE=${PYTHONUSERBASE}"
-	python -c 'import site; print site.USER_BASE'
+	python3 -c 'import site; print(site.USER_BASE)'
 	echo "FALCON_PIP_EDIT=${FALCON_PIP_EDIT}"
 	echo "FALCON_PIP_USER=${FALCON_PIP_USER}"
 check:
-	python -c 'import pypeflow.simple_pwatcher_bridge; print pypeflow.simple_pwatcher_bridge'
-	python -c 'import falcon_kit; print falcon_kit.falcon'
+	python3 -c 'import pypeflow.simple_pwatcher_bridge; print(pypeflow.simple_pwatcher_bridge)'
+	python3 -c 'import falcon_kit; print(falcon_kit.falcon)'
 extra:
-	pip install ${FALCON_PIP_USER} Cython
-	pip install ${FALCON_PIP_USER} numpy
-	pip install ${FALCON_PIP_USER} h5py
-	cd ${FALCON_WORKSPACE}/pbcommand; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
-	cd ${FALCON_WORKSPACE}/pbsmrtpipe; pip install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+	pip3 install ${FALCON_PIP_USER} Cython
+	pip3 install ${FALCON_PIP_USER} numpy
+	pip3 install ${FALCON_PIP_USER} h5py
+	cd ${FALCON_WORKSPACE}/pbcommand; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
+	cd ${FALCON_WORKSPACE}/pbsmrtpipe; pip3 install ${FALCON_PIP_USER} ${FALCON_PIP_EDIT} .
 test: #after 'install'
 	${MAKE} -C ${FALCON_WORKSPACE}/FALCON-examples test
 clean:
 	cd ${FALCON_WORKSPACE}/DAZZ_DB; ${MAKE} clean
 	cd ${FALCON_WORKSPACE}/DALIGNER; ${MAKE} clean
 	cd ${FALCON_WORKSPACE}/DAMASKER; ${MAKE} clean
-	cd ${FALCON_WORKSPACE}/pypeFLOW; python setup.py clean; rm -rf build/ dist/
-	cd ${FALCON_WORKSPACE}/FALCON; python setup.py clean; rm -rf build/ dist/
+	cd ${FALCON_WORKSPACE}/pypeflow3; python3 setup.py clean; rm -rf build/ dist/
+	cd ${FALCON_WORKSPACE}/falcon3; python3 setup.py clean; rm -rf build/ dist/
 	rm -rf ${RACON_BUILD_DIR}
 remote:
 	git remote add pb ssh://git@github.com/pb-cdunn/FALCON-make
