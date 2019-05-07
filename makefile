@@ -19,7 +19,6 @@ export CPPFLAGS+=-D_GNU_SOURCE
 
 all: checklist
 	${MAKE} show
-	${MAKE} install-pip
 	${MAKE} install # This will double -D_GNU_SOURCE, but that is ok for now.
 	${MAKE} check
 checklist:
@@ -52,11 +51,6 @@ install-git-sym:
 	# TODO: copy vs. symlink?
 	ln -sf $(abspath ${FALCON_WORKSPACE}/git-sym/git-sym) ${FALCON_PREFIX}/bin/git-sym
 
-install-pip:
-	python -c 'import pip; print pip' || python get-pip.py ${FALCON_PIP_USER}
-	pip install ${FALCON_PIP_USER} --upgrade pip
-	pip install ${FALCON_PIP_USER} --upgrade setuptools # needed when --edit is used
-	pip install ${FALCON_PIP_USER} nose pytest # for running tests while building
 show:
 	mkdir -p ${FALCON_PREFIX}/bin
 	which python
