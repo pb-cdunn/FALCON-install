@@ -20,8 +20,8 @@ all: checklist
 	${MAKE} install # This will double -D_GNU_SOURCE, but that is ok for now.
 	${MAKE} check
 checklist:
-	@if [ -z "$${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
-	@if [ ! -e "$${FALCON_PREFIX}/bin" ] ; then echo 'Error: directory FALCON_PREFIX/bin (${FALCON_PREFIX}/bin) does not exist'; exit 1; fi
+	@if [ -z "${FALCON_PREFIX}" ]; then echo 'Error: FALCON_PREFIX is not set'; exit 1; fi
+	@if [ ! -e "${FALCON_PREFIX}/bin" ] ; then echo 'Error: directory FALCON_PREFIX/bin (${FALCON_PREFIX}/bin) does not exist'; exit 1; fi
 install: install-DAZZ_DB install-DALIGNER install-DAMASKER install-DEXTRACTOR install-pypeflow3 install-falcon3 install-falcon_unzip3 install-git-sym install-nim-falcon install-racon
 install-DAZZ_DB:
 	${MAKE} -C ${FALCON_WORKSPACE}/DAZZ_DB all
