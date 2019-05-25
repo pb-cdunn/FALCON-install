@@ -53,6 +53,7 @@ install-git-sym:
 
 show:
 	mkdir -p ${FALCON_PREFIX}/bin
+	mkdir -p ${FALCON_PREFIX}/lib
 	which python3
 	echo "PYTHONUSERBASE=${PYTHONUSERBASE}"
 	python3 -c 'import site; print(site.USER_BASE)'
@@ -84,6 +85,7 @@ RACON_BUILD_DIR=$(CURDIR)/build-racon
 build-racon:
 	mkdir -p ${RACON_BUILD_DIR}
 	cd ../racon && meson -Ddefault_library=static --buildtype=release -Dc_args=-O3 --prefix=${FALCON_PREFIX} ${RACON_BUILD_DIR}
+	# If that failed, you might need to rm build-racon/
 
 install-racon: | build-racon
 	ninja -v -C ${RACON_BUILD_DIR} reconfigure
